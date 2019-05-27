@@ -1,0 +1,34 @@
+\usepackage{graphicx}
+\graphicspath{{recursos/}}
+
+% cor das caixas
+\usepackage{xcolor}
+\definecolor{verde}{RGB}{17,125,17}
+
+% pacote de configuração
+\usepackage[
+    nome = Python,
+    cor  = verde,
+    logo = logo.pdf,
+    link = https://www.python.org/
+]{pacotes/tutorial}
+
+\newcommand{\matplotlib}{%
+    \texttt{Matplotlib}
+}
+\newcommand{\numpy}{%
+    \texttt{NumPy}
+}
+\newcommand{\scipy}{%
+    \texttt{SciPy}
+}
+\newcommand{\pandas}{%
+    \texttt{Pandas}
+}
+
+% pacotes extras
+\usepackage{caption, subcaption, pdfpages, float}
+\usepackage{circuitikz, graphics, wrapfig}
+
+% começa a seção no `0`
+\setcounter{section}{-1}
