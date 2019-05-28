@@ -3,7 +3,7 @@
 
 % cor das caixas
 \usepackage{xcolor}
-\definecolor{verde}{RGB}{17,125,17}
+\definecolor{verde}{RGB}{22,159,37}
 
 % pacote de configuração
 \usepackage[
@@ -13,22 +13,53 @@
     link = https://www.python.org/
 ]{pacotes/tutorial}
 
-\newcommand{\matplotlib}{%
-    \texttt{Matplotlib}
+\newcommand{\python}{\software}
+\newcommand{\novonome}[2]{
+    \newcommand{#1}{%
+        \texttt{#2}
+    }
 }
-\newcommand{\numpy}{%
-    \texttt{NumPy}
-}
-\newcommand{\scipy}{%
-    \texttt{SciPy}
-}
-\newcommand{\pandas}{%
-    \texttt{Pandas}
-}
+\novonome{\matplotlib}{Matplotlib}
+\novonome{\numpy}{NumPy}
+\novonome{\scipy}{SciPy}
+\novonome{\pandas}{Pandas}
 
 % pacotes extras
 \usepackage{caption, subcaption, pdfpages, float}
 \usepackage{circuitikz, graphics, wrapfig}
+
+\usepackage{caption}
+\usepackage[newfloat]{minted}
+\definecolor{sepia}{RGB}{252,246,226}
+\setminted{
+    autogobble,
+    bgcolor=sepia,
+    style=pastie,
+    python3
+}
+\setmintedinline{
+    bgcolor={}
+}
+
+\newenvironment{code}{
+    \captionsetup{type=listing}
+}{}
+\SetupFloatingEnvironment{listing}{name=Código}
+
+\newcommand{\pyinput}[4][]{
+    \begin{code}
+        \captionof{listing}{#3}
+        \label{#4}
+        \inputminted[firstline=3,#1]{python}{recursos/#2.py}
+    \end{code}
+}
+\newcommand{\pyline}[1]{\mintinline{python}{#1}}
+\newcommand{\novopynome}[2]{
+    \newcommand{#1}{%
+        \pyline{#2}
+    }
+}
+\novopynome{\dataframe}{DataFrame}
 
 % começa a seção no `0`
 \setcounter{section}{-1}

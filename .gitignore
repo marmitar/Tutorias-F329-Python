@@ -1,4 +1,6 @@
 .vscode/
+_minted-*
+__pycache__
 
 main.pdf
 *.aux*
