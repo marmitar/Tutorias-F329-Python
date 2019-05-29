@@ -1,0 +1,24 @@
+A interface \pyplot também ajuda na hora de salvar os gráficos em imagens, com a função \href{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.pyplot.savefig.html}{\pyline{savefig}}. Essa função reconhece o tipo do arquivo pela extensão e já vem com várias opções desde o início. Os tipos mais importantes normalmente são \texttt{PNG} e \texttt{PDF}, que podem ser criados seguindo os códigos \ref{code:basico:png} e  \ref{code:basico:pdf}. Para o \texttt{PNG}, também existe a opção de controlar a resolução pelo \texttt{DPI} da imagem, com o argumento \pyline{dpi}.
+
+\begin{listing}[H]
+    \caption{Salvando o gráfico em um arquivo \texttt{PNG}}
+    \label{code:basico:png}
+
+    \pyinclude[firstline=11, lastline=13]{recursos/basico/read.py}
+\end{listing}
+
+\begin{listing}[H]
+    \caption{Salvando o gráfico em um arquivo \texttt{PDF}}
+    \label{code:basico:pdf}
+
+    \pyinclude[firstline=15, lastline=17]{recursos/basico/read.py}
+\end{listing}
+
+Para gráficos vetorizados, a opção mais usada é o \texttt{SVG}, que também é resolvido por padrão com o \matplotlib, fazendo como no código \ref{code:basico:svgpgf}. No entanto, quando se quer usar o gráfico em um documento de \LaTeX, uma opção muito útil é o \texttt{PGF}, que não passa de um arquivo de texto com comandos do pacote \texttt{pgf} para ser inserido em uma figura com um comando do tipo \mintinline{latex}{\input{grafico.pgf}}, mas cuidado com as configurações.
+
+\begin{listing}[H]
+    \caption{Salvando o gráfico em um arquivo \texttt{SVG} ou \texttt{PGF}}
+    \label{code:basico:svgpgf}
+
+    \pyinclude[firstline=19, lastline=23]{recursos/basico/read.py}
+\end{listing}

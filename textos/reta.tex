@@ -1,0 +1,55 @@
+\begin{table}[H]
+    \centering
+    \input{recursos/reta/dados}
+    \caption{Dados de corrente para cada tensão, gerados por computador}
+    \label{tab:reta:dados}
+\end{table}
+
+Nesta seção, será tomado como exemplo a relação de corrente e tensão em um resistor, dado de forma teórica pela relação (\ref{eq:reta:corrente}). Por mais que os dados usados aqui sejam os da tabela \ref{tab:reta:dados}, essa parte de apresentação de dados é importante para todos os tipos de análise, em especial, para dados coletados manualmente, como é o caso da maioria dos experimentos da disciplina de \texttt{F 329}.
+
+\begin{equacao} \label{eq:reta:corrente}
+    I = \frac{1}{R} ~ V
+\end{equacao}
+
+
+\subsection{Dados Pontuais}
+
+    \begin{listing}[H]
+        \caption{Gerando um gráfico de dispersão}
+        \label{code:reta:scatter}
+
+        \pyinclude[firstline=11, lastline=15]{recursos/reta/reta.py}
+    \end{listing}
+
+    Para apresentar os dados coletados, a melhor opção é a função \href{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.pyplot.scatter.html}{\pyline{scatter}} do \pyplot, que recebe uma lista de valores de $x$ e outra lista de $y$ como argumentos.
+
+    \begin{figure}[htbp]
+        \centering
+        \input{recursos/reta/dados.pgf}
+
+        \caption{Gráfico de dispersão dos pontos}
+        \label{fig:reta:dados}
+    \end{figure}
+
+
+\subsection{Texto dos Eixos e do Título}
+
+    Em um gŕafico como este, é necessário colocar texto no título e nos rótulos (\textit{label}) dos eixos.
+
+    \begin{listing}[H]
+        \caption{Montagem dos textos do gráfico}
+        \label{code:reta:textos}
+
+        \pyinclude[firstline=19, lastline=25]{recursos/reta/reta.py}
+    \end{listing}
+
+
+\subsection{Resultado}
+
+    \begin{figure}[htbp]
+        \centering
+        \input{recursos/reta/resultado.pgf}
+
+        \caption{Exemplo de gráfico com os pontos}
+        \label{fig:reta:resultado}
+    \end{figure}

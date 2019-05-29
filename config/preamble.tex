@@ -26,40 +26,37 @@
 
 % pacotes extras
 \usepackage{caption, subcaption, pdfpages, float}
-\usepackage{circuitikz, graphics, wrapfig}
+\usepackage{circuitikz, graphics, wrapfig, pgf}
 
-\usepackage{caption}
-\usepackage[newfloat]{minted}
+% pacotes para importar código
+\usepackage{caption, booktabs}
+\usepackage[section, newfloat]{minted}
 \definecolor{sepia}{RGB}{252,246,226}
 \setminted{
+    bgcolor = sepia,
+    style   = pastie,
+    frame   = leftline,
     autogobble,
-    bgcolor=sepia,
-    style=pastie,
-    python3
+    samepage,
+    python3,
 }
 \setmintedinline{
     bgcolor={}
 }
 
-\newenvironment{code}{
-    \captionsetup{type=listing}
-}{}
+% ambientes de códigos de Python
+\newmintedfile[pyinclude]{python}{}
+\newmintinline[pyline]{python}{}
+
 \SetupFloatingEnvironment{listing}{name=Código}
 
-\newcommand{\pyinput}[4][]{
-    \begin{code}
-        \captionof{listing}{#3}
-        \label{#4}
-        \inputminted[firstline=3,#1]{python}{recursos/#2.py}
-    \end{code}
-}
-\newcommand{\pyline}[1]{\mintinline{python}{#1}}
 \newcommand{\novopynome}[2]{
     \newcommand{#1}{%
         \pyline{#2}
     }
 }
 \novopynome{\dataframe}{DataFrame}
+\novopynome{\pyplot}{pyplot}
 
 % começa a seção no `0`
 \setcounter{section}{-1}
