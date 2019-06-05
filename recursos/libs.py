@@ -18,6 +18,7 @@ config = {
     'font.family': ['serif'],
     'font.size': 10.0,
     'grid.linestyle': '--',
+    'legend.frameon': True,
     'text.color': '.0',
     'xtick.labelsize': 'small',
     'ytick.labelsize': 'small',
@@ -35,7 +36,10 @@ plt.rcParams['pgf.preamble'] = r"""
 plt.rcParams['pgf.rcfonts'] = False
 
 def read_tsv(arq, decimal=',', **kwargs) -> pd.DataFrame:
-    return pd.read_csv(arq, sep='\t', decimal=decimal, **kwargs)
+    try:
+        return pd.read_csv(arq, sep='\t', decimal=decimal, **kwargs)
+    except RuntimeError:
+        return pd.read_csv(arq, sep='\t', decimal=decimal, **kwargs)
 
 
 def write_table(df: pd.DataFrame, arq_nome: str, index=False, **kwargs):

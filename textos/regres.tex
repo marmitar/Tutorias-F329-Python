@@ -1,0 +1,69 @@
+É muito comum aparecer algum tipo de relação linear entre os dados. Nesse tipo de relação costuma-se aplicar técnicas de regressão para encontrar a melhor reta que representa esses dados.
+
+Pelo alinhamento dos pontos da seção \nameref{sec:reta} e pela equação teórica \ref{eq:reta:corrente}, fica clara a possibilidade de se aplicar uma regressão linear e, portanto, os dados continuarão os mesmos nessa seção.
+
+
+\subsection{Resultados Coletados}
+
+    A primeira coisa é pegar os dados e mostrar cada ponto coletado, como na seção \nameref{sec:reta}. Só que como vamos precisar dos dados depois, o melhor é separar as colunas dos dados em suas próprias variáveis para facilitar a análise dos dados depois, apesar disso não ser necessário.
+
+    Para este gráfico, como teremos dois tipos de figuras, os dados realmente coletados e a reta resultante da regressão, então vamos precisar de colocar a legenda. É possível já colocar o texto da legenda na construção do gráfico com o argumento \pyline{label}. Isso pode ser visto no código \ref{code:regres:dados}, mas lá também tem um argumento extra, \pyline{zorder}, que controla a ordem dos desenhos e que foi usado aqui para colocar os pontos acima da reta que será feita depois.
+
+    \begin{listing}[H]
+        \caption{Separando e desenhando os dados pontuais}
+        \label{code:regres:dados}
+
+        \pyinclude[firstline=10, lastline=18]{recursos/regres/regres.py}
+    \end{listing}
+
+
+\subsection{Aplicação da Regressão}
+
+    Existem muitas maneiras diferentes em \software de se realizar um regressão linear. Uma das formas mais abrangentes de se fazer isso é com a biblioteca \href{https://docs.scipy.org/doc/scipy/reference/odr.html}{\pyline{odr}} do \scipy, feita para regressão ortogonal dos dados, mas pode ser utilizada com mínimos quadrados, mudando apenas seu tipo, como no código \ref{code:regres:regres}.
+
+    \begin{listing}[H]
+        \caption{Importando o pacote \pyline{odr} da biblioteca \scipy}
+        \label{code:regres:odr}
+
+        \pyinclude[firstline=2, lastline=5]{recursos/regres/regres.py}
+    \end{listing}
+
+    Para tanto, é preciso montar organizar os dados em uma instância de \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.odr.RealData.html#scipy.odr.RealData}{\pyline{RealData}} e usar isso para criar uma instância da \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.odr.ODR.html#scipy.odr.ODR}{\pyline{ODR}} com o modelo da regressão, que em todos os exemplos desse material será o \href{https://docs.scipy.org/doc/scipy/reference/odr.html#scipy.odr.unilinear}{\pyline{odr.models.unilinear}}. Para usar o método dos mínimos quadrados é só chamar o método \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.odr.ODR.set_job.html#scipy.odr.ODR.set_job}{\pyline{set_job}} com argumento \pyline{fit_type=2}. Depois é só rodar a regressão com o \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.odr.ODR.run.html#scipy.odr.ODR.run}{\pyline{run}}, que retorna um objeto \href{https://docs.scipy.org/doc/scipy/reference/generated/scipy.odr.Output.html#scipy.odr.Output}{\pyline{Output}} com várias informações, entre elas os coeficientes e suas incertezas, nos atributos \pyline{beta} e \pyline{sd_beta}.
+
+    \begin{listing}[H]
+        \caption{Regressão Linear com Mínimos Quadrados}
+        \label{code:regres:regres}
+
+        \pyinclude[firstline=20, lastline=33]{recursos/regres/regres.py}
+    \end{listing}
+
+    As últimas linhas do código \ref{code:regres:regres} servem para que os valores dos coeficientes sejam mostrados no terminal ou no \textit{notebook} do \texttt{Jupyter}, quando executado.
+
+
+\subsection{Desenho da Regressão}
+
+    Para desenhar a reta da regressão é com a função \href{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.pyplot.plot.html}{\pyline{plot}}, mas antes precisamos montar o rótulo que irá na legenda do gráfico. No código \ref{code:regres:plot} tem dois exemplos para o rótulo, um apenas textual e outro com os coeficientes da regressão.
+
+    \begin{listing}[H]
+        \caption{Desenho da reta encontrada}
+        \label{code:regres:plot}
+
+        \pyinclude[firstline=35, lastline=50]{recursos/regres/regres.py}
+    \end{listing}
+
+    Qualquer tipo de curva no \matplotlib é feito com pontos que são ligados entre si, ou seja, são apenas segmentos de reta conectados. Para simular a continuidade em outras curvas, costuma-se fazer vários pontos na região em que se deseja desenhar. Podemos fazer isso com a função \href{https://docs.scipy.org/doc/numpy/reference/generated/numpy.linspace.html?highlight=linspace#numpy.linspace}{\pyline{linspace}} do \numpy, em que o primeiro argumento é o começo dos pontos, o segundo é o final do intervalo e o argumento \pyline{num} é a quantidade de pontos igualmente espaçados nessa região.
+
+    Por mais que isso não seja muito importante nesse caso, no código tem um exemplo de como fazer esse intervalo com 200 pontos igualmente espaçados, armazenado em \pyline{X}. Com esses pontos, é possível aplicar a função da curva nesse intervalo para encontrar a imagem desse intervalo, mas devido às técnicas de \href{https://realpython.com/numpy-array-programming/#what-is-vectorization}{\emph{vetorização}} do \numpy, isso é feito como se fosse aplicar a operação em apenas um valor, mas a biblioteca realiza o laço implicitamente e retorna outro vetor em \pyline{Y}.
+
+    Além disso, para diferenciar a regressão dos valores, ela foi desenhada em vermelho, com \pyline{color='red'}, e com $40\%$ de transparência, com \pyline{alpha=0.4}. Depois do gráfico já desenhado, foi usado ainda a função \href{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.pyplot.legend.html}{\pyline{legend}} para desenhar a legenda. Depois disso, é só colocar os nomes nomes do eixos e o título, como na seção \ref{sec:reta}.
+
+
+\subsection{Resultado}
+
+    \begin{figure}[H]
+        \centering
+        \input{recursos/regres/resultado.pgf}
+
+        \caption{Exemplo de regressão linear}
+        \label{fig:regres:resultado}
+    \end{figure}

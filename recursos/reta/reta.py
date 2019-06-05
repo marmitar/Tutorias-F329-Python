@@ -20,9 +20,8 @@ plt.savefig('dados.pgf')
 
 plt.xlabel('Tensão [V]')
 plt.ylabel('Corrente [mA]')
-plt.title('''Relação da Corrente pela Tensão em um Resistor''')
+plt.title('Relação da Corrente pela Tensão em um Resistor')
 
 # -- depois salva o gráfico -- #
 
 plt.savefig('resultado.pgf')
-plt.savefig('resultado.png')
