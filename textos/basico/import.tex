@@ -23,7 +23,7 @@ No caso dos dados de um gerenciador de tabelas, como o \texttt{Excel}, o \texttt
         \label{fig:basico:download}
     \end{figure}
 
-    Apesar de o exemplo da figura \ref{fig:basico:download} ser apenas no \texttt{Google Planilhas}, qualquer outro gerenciador de tabelas atual terá uma opção similar como parte do programa também. Uma vez que o \texttt{CSV} esteja pronto, ele pode ser transformado em um \dataframe com a função \href{http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html#pandas.read_csv}{\pyline{read_csv}} do \pandas.
+    Apesar de o exemplo da figura \ref{fig:basico:download} ser apenas no \texttt{Google Planilhas}, qualquer outro gerenciador de tabelas atual terá uma opção similar como parte do programa também. Uma vez que o \texttt{CSV} esteja pronto, ele pode ser transformado em um \dataframe com a função \pyref{http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html}{read\_csv} do \pandas.
 
     O argumento \pyline{decimal} da função representa qual o carácter a ser entendido como separador decimal. No exemplo do código \ref{code:basico:csv}, é usado a vírgula como separador, mas se por acaso estiver usando o ponto final para isso, lembre-se de mudar para \pyline{'.'}. Se o separador estiver diferente, o \pandas vai entender o valor como texto, o que não servirá para a montagem do gráfico depois.
 
@@ -37,7 +37,7 @@ No caso dos dados de um gerenciador de tabelas, como o \texttt{Excel}, o \texttt
 
 \subsubsection{Arquivos do Excel}
 
-    Também é possível ler diretamente arquivos do \texttt{Excel} ou arquivos do mesmo tipo (\texttt{.xlsx}) extraído de outro programa, como na figura \ref{fig:basico:download}. Para isso, além de expecificar o nome do arquivo, é necessário dizer qual a folha da planilha a ser usada com o argumento \pyline{sheet_name}, como no código \ref{code:basico:xlsx}, tudo com a função \href{http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_excel.html#pandas.read_excel}{\pyline{read_excel}}. Para este tipo de arquivo, não precisa preocupar com o separador de decimal, pois a representação interna do dado já é númerica, em vez de textual, como era no \texttt{CSV}.
+    Também é possível ler diretamente arquivos do \texttt{Excel} ou arquivos do mesmo tipo (\texttt{.xlsx}) extraído de outro programa, como na figura \ref{fig:basico:download}. Para isso, além de expecificar o nome do arquivo, é necessário dizer qual a folha da planilha a ser usada com o argumento \pyline{sheet_name}, como no código \ref{code:basico:xlsx}, tudo com a função \pyref{http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_excel.html}{read\_excel}. Para este tipo de arquivo, não precisa preocupar com o separador de decimal, pois a representação interna do dado já é númerica, em vez de textual, como era no \texttt{CSV}.
 
     \begin{listing}[H]
         \caption{Leitura de um \dataframe a partir de um arquivo de \texttt{Excel}}

@@ -11,23 +11,23 @@ Como exemplo para a aplicação de barras de incerteza, continuaremos com os mes
 \subsection{Dados Pontuais com Barras de Incerteza}
 
     \begin{listing}[H]
-        \caption{Regressão Linear com Mínimos Quadrados}
+        \caption{Separação das colunas e gráfico com barras de incerteza}
         \label{code:incert:dados}
 
         \pyinclude[firstline=12, lastline=25]{recursos/incert/incert.py}
     \end{listing}
 
-    Para facilitar, as colunas foram separadas em \pyline{x} e \pyline{y}, com suas incertezas \pyline{dx} e \pyline{dy} em cada ponto. Agora, para desenhar as barras de incerteza, basta utilizar a função \href{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.pyplot.errorbar.html}{\pyline{errorbar}} com os argumentos \pyline{xerr=dx} e \pyline{yerr=dy}. O argumento \pyline{fmt} foi usado para fazer com que os dados fossem desenhados como pontos, que é o formato \pyline{'o'}.
+    Para facilitar, as colunas foram separadas em \pyline{x} e \pyline{y}, com suas incertezas \pyline{dx} e \pyline{dy} em cada ponto. Agora, para desenhar as barras de incerteza, basta utilizar a função \pyref{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.pyplot.errorbar.html}{errorbar} com os argumentos \pyline{xerr=dx} e \pyline{yerr=dy}. O argumento \pyline{fmt} foi usado para fazer com que os dados fossem desenhados como pontos, que é o formato \pyline{'o'}.
 
     Além disso, os argumentos \pyline{elinewidth}, \pyline{capsize} e \pyline{capthick} controlam a grossura da barra de incerteza, o comprimento do topo da barra e a grossura desse topo, respectivamente. A cor dos pontos e das barras foi alterado para preto com \pyline{color='black'}. Novamente, esses desenhos foram colocados com ordem alta de desenho e com um rótulo para a legenda.
 
 
 \subsection{Regressão Linear com Incertezas}
 
-    A regressão com incertezas fica bem parecida com a da seção \nameref{sec:regres}, utilizando o pacote \pyline{odr}. A primeira diferença é que o \pyline{RealData} agora tem as incertezas de $x$ e $y$ em \pyline{sx} e \pyline{sy}. O problema com a regressão da seção anterior é que o método dos mínimos quadrados não é capaz de analisar as incertezas em $x$, então vamos deixar a \pyline{ODR} aplicar a regressão ortogonal, como no código \ref{code:incert:regres}.
+    A regressão com incertezas fica bem parecida com a da seção \nameref{sec:regres}, utilizando o pacote \pyline{odr}. A primeira diferença é que o \pyline{RealData} agora tem as incertezas de $x$ e $y$ em \pyline{sx} e \pyline{sy}. O problema com a regressão da seção anterior é que o método dos mínimos quadrados não é capaz de analisar as incertezas em $x$, então vamos deixar a \pyline{ODR} aplicar a regressão por distância ortogonal, como no código \ref{code:incert:regres}.
 
     \begin{listing}[H]
-        \caption{Regressão Linear com Mínimos Quadrados}
+        \caption{Regressão Linear com Inceretzas}
         \label{code:incert:regres}
 
         \pyinclude[firstline=27, lastline=40]{recursos/incert/incert.py}
@@ -36,6 +36,10 @@ Como exemplo para a aplicação de barras de incerteza, continuaremos com os mes
 
 \subsection{Resultados}
 
+    \begin{nota}
+        Note que os coeficientes $a$ e $b$ da regressão em \ref{fig:incert:resultado}, tanto em seus valores quanto nas suas incertezas, são levemente diferentes dos da figura \ref{fig:regres:resultado}, mesmo com os dados numéricos idênticos. A diferença aqui se deve ao método de regressão diferente, mas mesmo utilizando a regressão ortogonal na seçao \nameref{sec:reta}, o valor difiriria já que agora as incertezas dos dados estão sendo levadas em conta.
+    \end{nota}
+
     \begin{figure}[H]
         \centering
         \input{recursos/incert/resultado.pgf}
@@ -43,7 +47,3 @@ Como exemplo para a aplicação de barras de incerteza, continuaremos com os mes
         \caption{Exemplo de baras de incerteza}
         \label{fig:incert:resultado}
     \end{figure}
-
-    \begin{nota}
-        Note que os coeficientes $a$ e $b$ da regressão em \ref{fig:incert:resultado}, tanto em seus valores quanto nas suas incertezas, são levemente diferentes dos da figura \ref{fig:regres:resultado}, mesmo com os dados numéricos idênticos. A diferença aqui se deve as incertezas dos dados, que agora estão sendo levadas em conta no cálculo da regressão.
-    \end{nota}

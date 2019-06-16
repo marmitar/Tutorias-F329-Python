@@ -18,6 +18,7 @@ config = {
     'font.family': ['serif'],
     'font.size': 10.0,
     'grid.linestyle': '--',
+    'legend.facecolor': '.9',
     'legend.frameon': True,
     'text.color': '.0',
     'xtick.labelsize': 'small',
