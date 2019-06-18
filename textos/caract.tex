@@ -1,0 +1,103 @@
+Um bom exemplo de equação característica a ser encontrada é relação do termistor (eq. \ref{eq:termistor}). Então, os dados serão os mesmo da seção \nameref{sec:escala:semilog}.
+
+
+\subsection{Encontrando os Coeficientes}
+
+    Para encontrar os coeficientes da equação característica, o primeiro passo normalmente é conseguir uma relação de linearização para poder aplicar alguma técnica de regressão linear e coeficientes dessa relação. Isso pode ser feito como na seção \nameref{sec:escala:regres}.
+
+    \begin{figure}[H]
+        \centering
+        \input{recursos/caract/regres.pgf}
+
+        \caption{Regressão da equação linearizada do termistor}
+        \label{fig:caract:regres}
+    \end{figure}
+
+    \begin{listing}[H]
+        \caption{Código completo para encontrar a equação característica no exemplo do termistor}
+        \label{code:caract:completo}
+
+        \pyinclude[firstline=4, lastline=62]{recursos/caract/caract.py}
+    \end{listing}
+
+    Depois que os coeficientes da reta foram encontrados, é preciso transformar os coeficientes para a forma inicial da equação. No caso do termistor, isso seria $A = e^b$ e $B = a$, com incertezas $\sigma_A = e^b \sigma_b$ e $\sigma_B = \sigma_a$. No código \ref{code:caract:completo}, todas as transformações, juntamente com a regressão, são feitas diretamente, como exemplo. No exemplo também é usada a função \pyref{https://docs.scipy.org/doc/numpy/reference/generated/numpy.exp.html}{exp}, que é apenas $\exp(x) = e^x$.
+
+    Note que para este exemplo, no entanto, faz mais sentido tratar a equação característica da forma inversa (eq. \ref{eq:caract:termistor}). Por causa disso, os eixos do gráfico \ref{fig:caract:caract} estão invertidos em relação à figura \ref{fig:caract:regres}.
+
+    \begin{equacao} \label{eq:caract:termistor}
+        T = \frac{B}{\ln(R) - \ln(A)}
+    \end{equacao}
+
+
+\subsection{Resultado}
+
+    O código \ref{code:caract:completo} produz como resultado a figura \ref{fig:caract:caract}.
+
+    \begin{figure}[H]
+        \centering
+        \input{recursos/caract/caract.pgf}
+
+        \caption{Exemplo de Equação Característica do Termistor}
+        \label{fig:caract:caract}
+    \end{figure}
+
+
+\subsection{Banda de Incerteza}
+
+    Para a equação \ref{eq:caract:termistor}, como $A$ e $B$ são constantes, bem como suas incertezas, $\sigma_A$ e $\sigma_B$, a equação da incerteza $\sigma_T$ de $T$ fica como:
+
+    \begin{equacao}
+        \sigma_T ~ = ~ \sigma_T(R, \sigma_R) ~ = ~ \frac{\sqrt{\left(\ln(R) - \ln(A)\right)^2 \sigma_B^2 + \left(\frac{\sigma_A}{A}\right)^2 + \left(\frac{\sigma_R}{R}\right)^2}}{\left(\ln(R) - \ln(A)\right)^2}
+    \end{equacao}
+
+    Se a equação característica for usada com um equipamento já pré-estabelecido, é possível assumir que a incerteza da medida, no caso a resistência, vai seguir uma função $\sigma_R = \sigma_R(R)$ conhecida para cada $R$. Dependendo da situação, é possível assumir que $\sigma_R$ é constante ou que a incerteza relativa $\frac{\sigma_R}{R}$ é constante. Para este exemplo, vamos assumir as equações (\ref{eq:resolucao}), (\ref{eq:calibracao}) e (\ref{eq:incerteza}).
+
+    \begin{eqnarray}
+        \label{eq:resolucao}
+        \text{resolução}(R) = \begin{cases}
+            \SI{0.1}{\ohm}, & \text{se}~ \SI{0}{\ohm} \le R \le \SI{600}{\ohm} \\
+            \SI{1}{\ohm},   & \text{se}~ \SI{600}{\ohm} < R \le \SI{6}{\kilo\ohm} \\
+            \SI{10}{\ohm},  & \text{se}~ \SI{6}{\kilo\ohm} < R \le \SI{60}{\kilo\ohm} \\
+            \text{indefinido}, & \text{caso contrário}
+        \end{cases} \\%
+        %
+        \label{eq:calibracao}
+        \mu_\text{calibração}(R) = \begin{cases}
+            1\% + 3 \times \text{resolução}(R),   & \text{se}~ \SI{0}{\ohm} \le R \le \SI{600}{\ohm} \\
+            0.5\% + 2 \times \text{resolução}(R), & \text{se}~ \SI{600}{\ohm} < R \le \SI{60}{\kilo\ohm} \\
+            \text{indefinido}, & \text{caso contrário}
+        \end{cases} \\%
+        %
+        \label{eq:incerteza}
+        \sigma_R(R) = \sqrt{\left(\frac{\text{resolução}(R)}{2 \sqrt{3}} \right)^2 + \left(\frac{\mu_\text{calibração}(R)}{\sqrt{3}} \right)^2}
+    \end{eqnarray}
+
+    \begin{listing}[H]
+        \caption{Implementação das funções para o cálculo da incerteza}
+        \label{code:caract:incert}
+
+        \pyinclude[firstline=3, lastline=37]{recursos/caract/incert.py}
+    \end{listing}
+
+    \begin{listing}[H]
+        \caption{Cálculo da incerteza e desenho da banda de incerteza}
+        \label{code:caract:bandas}
+
+        \pyinclude[firstline=39, lastline=55]{recursos/caract/incert.py}
+    \end{listing}
+
+    No código \ref{code:caract:incert} foi necessário utilizar a função \pyref{https://docs.scipy.org/doc/numpy/reference/generated/numpy.sqrt.html}{sqrt}, que é apenas a raiz quadrada: $\text{sqrt}(x) = \sqrt{x}$;. Para facilitar o código, foi utilizada também a função \pyref{https://docs.scipy.org/doc/numpy/reference/generated/numpy.vectorize.html}{vetorize} como decorador, que transforma uma função qualquer de \python em uma função vetorizada como as funções de \numpy. Isso poderia ser feito com um simples \pyline{for} também: \pyline{dRs = [dR_total(R) for R in Rs]}; mas isso retorna uma lista, que às vezes pode causar problemas com os \href{https://docs.scipy.org/doc/numpy/reference/arrays.html}{vetores} de \numpy.
+
+    O código \ref{code:caract:bandas} é similar aos outros códigos de montagem de gráfico, só que com uma nova função, \pyref{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.pyplot.fill_between.html}{fill\_between}, que desenha uma região delimitada por duas curvas \pyline{y1} e \pyline{y2}, que aqui foram $y_1 = T - \sigma_T$ e $y_2 = T + \sigma_T$, formando a faixa de incerteza. Essa região foi montada com a mesma cor da curva característica, com uma opacidade menor: \pyline{alpha=0.15}; que pode ser visto na figura \ref{fig:caract:bandas}.
+
+    \begin{figure}[H]
+        \centering
+        \input{recursos/caract/incert.pgf}
+
+        \caption{Exemplo de Equação Característica com Banda de Incerteza}
+        \label{fig:caract:bandas}
+    \end{figure}
+
+    \begin{nota}
+        Normalmente não é possível assumir uma incerteza determinística $\sigma_y(x, \sigma_x) = f(x)$, como foi feito com a incerteza da temperatura nessa seção. Para esse casos, é possível desconsiderar a incerteza em $x$, $\sigma_x = 0$, que serveria para mostrar a menor incerteza que a equação característica encontrada consegue alcançar. No entanto, se esse for o caso, pode ser que a banda de incerteza acabe não sendo muito útil e apenas deixe a leitura do gráfico mais complicado.
+    \end{nota}

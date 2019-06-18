@@ -37,42 +37,38 @@ def regres(dados):
     logx = np.log10(x)
     logy = np.log10(y)
 
-    dlogx = dx/x
-    dlogy = dy/y
+    dlogx = dx / (x * np.log(10))
+    dlogy = dy / (y * np.log(10))
 
     # regressão linear com incertezas
     data = odr.RealData(logx, logy, sx=dlogx, sy=dlogy)
     odreg = odr.ODR(data, odr.models.unilinear)
     ans = odreg.run()
 
-    a, b = ans.beta      # y = ax + b
+    a, b = ans.beta      # logy = a logx + b
     da, db = ans.sd_beta # incertezas de a e b
 
-    # transforma os coeficientes de volta: y = A x^B
-    A = 10**b
-    dA = db * np.log(10) * 10**b
-
-    B = a
-    dB = da
-
     # mostrando os coeficientes e suas incertezas
-    print(f'coef. do monomio = ({A}+-{dA}) [Ohm]')
-    print(f'grau do monomio  = ({B}+-{dB})')
+    print(f'coef. angular = {a}+-{da}')
+    print(f'coef. linear  = {b}+-{db}')
 
     # -- desenha a reta resultante da regressão e completa o gráfico -- #
 
     rotulo = 'Regressão Linearizada'
 
-    rotulo = f'Regressão: $y = ({b:.1f} \pm {db:.1f}) \\times x^{{{A:.1f} \pm {dA:.1f}}}$'
+    rotulo = f'''Regressão Linearizada:
+    $\log_{{10}}y = ({a:.1f} \pm {da:.1f}) \\times \log_{{10}}x + ({b:.1f} \pm {db:.1f})$'''
 
     # monta os limites para desenho da reta
     X = np.logspace(min(logx), max(logx), num=200)
-    Y =  A * X**B
+    Y =  10 ** (a*np.log10(X) + b)
     # e faz o gráfico dela atrá dos pontos
     plt.plot(X, Y, color='red', alpha=0.4, label=rotulo)
 
     # para exibir as legendas do gráfico
     plt.legend()
+
+    textos()
 
 
 def textos():

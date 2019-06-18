@@ -50,7 +50,7 @@ Dentre as técnicas mais comuns, muitas envolvem a aplicação de logaritmos par
     Como as linhas de \textit{grid} ficaram bem espaçadas, foram colocadas linhas internas com a função \pyref{https://matplotlib.org/api/_as_gen/matplotlib.pyplot.grid.html}{grid} do \pyplot e os argumentos \pyline{True}, para mostrar as linhas, e \pyline{which='minor'}, para desenhar entre as linhas principais. Elas também foram colocadas em ambos os eixos e com cor 90\% branca, com as opções \pyline{axis='both'} e \pyline{color='0.9'}.
 
 
-\subsection{Gráfico Semi-Log}
+\subsection{Gráfico Semi-Log} \label{sec:escala:semilog}
 
     \begin{figure}[H]
         \centering
@@ -86,25 +86,29 @@ Dentre as técnicas mais comuns, muitas envolvem a aplicação de logaritmos par
         \centering
         \input{recursos/escala/semilog.pgf}
 
-        \caption{Gráfico do Termistor (eq. \ref{eq:termistor})}
+        \caption{Gráfico \texttt{semi-log} do Termistor (eq. \ref{eq:termistor})}
         \label{fig:escala:semilog:resultado}
     \end{figure}
 
     \begin{nota}
-        A escolha de transformar o eixo, como no eixo $x$ da figura \ref{fig:escala:semilog:resultado}, ou mudar a escala, que foi feito no eixo $y$, é uma parte importante da montagem dos gráficos. Normalmente, é preferível mexer na escala quando é uma escala conhecida e quando se busca explicitar os valores originais do eixo. Nos casos em que isso não é necessário ou não é possível, a transformação dos eixos acaba sendo uma opção menos confusa.
+        A escolha de transformar o eixo, como no eixo $x$ da figura \ref{fig:escala:semilog:resultado}, ou mudar a escala, que foi feito no eixo $y$, é uma parte importante da montagem dos gráficos. Normalmente, é preferível mexer na escala quando é uma escala conhecida ou quando se busca explicitar os valores originais do eixo. Nos casos em que isso não é necessário ou não é possível, a transformação dos eixos acaba sendo uma opção menos confusa.
     \end{nota}
 
 
-\subsection{Regressão em Escala Logarítmica}
+\subsection{Regressão em Escala Logarítmica} \label{sec:escala:regres}
 
     \begin{listing}[H]
         \caption{Aplicando a regressão ortogonal depois de uma transformação númerica dos eixos}
         \label{code:escala:regres}
 
-        \pyinclude[firstline=36, lastline=62]{recursos/escala/wheat.py}
+        \pyinclude[firstline=36, lastline=55]{recursos/escala/wheat.py}
     \end{listing}
 
-    A regressão de uma curva de um monômio ou de uma exponencial é possível com técnicas de regressão não-linear, só que essas técnicas não cabem no escopo dessa matéria. Uma outra opção muito utilizada é encontrar uma linearização, como na equação (\ref{eq:linearizacao}), e, com a nova relação linear de $f(x, y) \times g(x, y)$, aplicar a regressão como da seção \nameref{sec:regres}. O único detalhe é que é preciso encontrar os valores de $f(x, y)$ e $g(x, y)$ e suas incertezas para cada par $(x, y)$ dos dados e só com esses valores pode-se encontrar os coeficientes $a$ e $b$, como foi feito na figura \ref{code:escala:regres}. Depois, pode se tranformar os valores encontrados para os coeficientes da equação inicial.
+    A regressão de uma curva de um monômio ou de uma exponencial é possível com técnicas de regressão não-linear, só que essas técnicas não cabem no escopo dessa matéria. Uma outra opção muito utilizada é encontrar uma linearização, como na equação (\ref{eq:linearizacao}), e, com a nova relação linear de $f(x, y) \times g(x, y)$, aplicar a regressão como da seção \nameref{sec:regres}.
+
+    O único detalhe é que é preciso encontrar os valores de $f(x, y)$ e $g(x, y)$ e suas incertezas para cada par $(x, y)$ dos dados e só com esses valores pode-se encontrar os coeficientes $a$ e $b$, como foi feito no código \ref{code:escala:regres}. No caso, como a transformação é $f(x, y) = \log_{10}(x)$, a incerteza fica $\sigma_{\log x} = \frac{1}{\ln(10)} \frac{\sigma_x}{x}$, sendo que para o eixo $y$ a transformação é igual.
+
+    As funções matemáticas foram utilizadas pelo \numpy, pelas técnicas de vetorização oferecidas, sendo elas \pyref{https://docs.scipy.org/doc/numpy/reference/generated/numpy.log.html}{log} e \pyref{https://docs.scipy.org/doc/numpy/reference/generated/numpy.log10.html}{log10}, que equivalem a $\ln(x)$ e $\log_{10}(x)$.
 
     \begin{figure}[H]
         \centering
@@ -113,3 +117,5 @@ Dentre as técnicas mais comuns, muitas envolvem a aplicação de logaritmos par
         \caption{Exemplo de regressão em escala \texttt{log-log}}
         \label{fig:escala:regres}
     \end{figure}
+
+    Perceba que a regressão obteve coeficiente angular próximo de $-1$, como era o esperado pela equação inicial (\ref{eq:wheatstone}).

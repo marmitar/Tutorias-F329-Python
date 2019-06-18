@@ -54,4 +54,4 @@ plt.xlabel('Tensão [V]')
 plt.ylabel('Corrente [mA]')
 plt.title('Regressão Linear da Corrente pela Tensão em um Resistor')
 
-plt.show()#savefig('resultado.pgf')
+plt.savefig('resultado.pgf')
