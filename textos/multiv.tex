@@ -1,0 +1,102 @@
+\edef\indentacao{\the\parindent}
+
+\noindent
+\begin{minipage}[t]{0.55\textwidth}\setlength{\parindent}{\indentacao}
+
+    Para os casos em que é necessário apresentar dados com mais de uma váriavel dependente de um mesmo dado $x$, existe a opção de gráficos múltiplos. Eles servem para comparar as relações do tipo $y_1 = f(x)$ e $y_2 = g(x)$, quando $x$, $y_1$ e $y_2$ são medidos em conjunto.
+
+    Em experimentos com circuitos, esse tipo de dado aparece, por exemplo, na medição de tensão em nós diferentes para a comparação de seus comportamentos no tempo. É o caso do circuito da figura \ref{fig:multiv:circuito}, cujos dados foram os da tabela \ref{tab:multiv:dados}.
+
+    \begin{table}[H]
+        \centering
+        \input{recursos/multiv/dados}
+        \caption{Dados gerados com simulador. Primeiros 6 valores.}
+        \label{tab:multiv:dados}
+    \end{table}
+
+\end{minipage}\vspace{0.05\textwidth}%
+\begin{minipage}[t]{0.4\textwidth}
+    \begin{figure}[H]
+        \centering
+        \input{recursos/multiv/circ}
+
+        \caption{Circuito de defasagem da tensão por um capacitor}
+        \label{fig:multiv:circuito}
+    \end{figure}
+\end{minipage}
+
+
+\subsection{Gráficos de Eixos Compartilhados} \label{sec:multiv:juntos}
+
+    \begin{listing}[H]
+        \caption{Montagem completa do gráfico de duas varíaveis com eixos compartilhados}
+        \label{code:multiv:juntos}
+
+        \pyinclude[firstline=13, lastline=31]{recursos/multiv/multiv.py}
+    \end{listing}
+
+    Esse método é melhor para visualizar a diferença de escala entre os dados, mas, se algum dos dados tem uma escala muito diferente, o gráfico pode acabar pecando na percepção dos dados. Um dos maiores limites para esse método, no entanto, é que as variáveis dependentes precisam ter a mesma motivação física e, por causa disso, a mesma gradeza, caso contrário, o eixo compartilhado entre elas perde completamente o sentido.
+
+    \begin{figure}[htbp]
+        \centering
+        \input{recursos/multiv/juntos.pgf}
+
+        \caption{Exemplo de gráfico com as curvas das duas tensões $V_1$ e $V_2$}
+        \label{fig:multiv:juntos}
+    \end{figure}
+
+
+\subsection{Gráficos com Apenas a Abscissa Comum}
+
+    Se as escalas entre $y_1$ e $y_2$ forem muito diferentes ou se forem grandezas diferentes, uma opção viável é montar um gráfico de três eixos. Pra fazer isso \matplotlib, é preciso tratar diretamente dos \emph{eixos} do gráfico, que são instâncias da classe \pyref{https://matplotlib.org/3.1.0/api/axes_api.html\#matplotlib.axes.Axes}{Axes}. Normalmente, a interface \pyplot gera esse objetos autmaticamente, quando necessário, mas aqui vamos precisar tratar da construção deles também, que pode ser feito com a função \pyref{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.pyplot.subplot.html}{subplot}, como no código \ref{code:multiv:duplo}.
+
+    O outro objeto, com o terceiro eixo, é um tipo de eixo chamado de \emph{gêmeo}, já que o eixo $x$ dele é o mesmo que o do primeiro. Para criar um eixo gêmeo em $x$ é com o método \pyref{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.axes.Axes.twinx.html}{twinx}. Para desenhar em cada eixo, as \href{https://matplotlib.org/3.1.0/api/axes_api.html\#plotting}{funções} são parecidas com as do \pyplot, como função \pyref{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.axes.Axes.plot.html}{plot}, mas aqui se deve tomar cuidado com qual eixo se deseja desenhar.
+
+    \begin{listing}[H]
+        \caption{Montagem completa do gráfico de duas varíaveis com abscissa compartilhada}
+        \label{code:multiv:duplo}
+
+        \pyinclude[firstline=36, lastline=66]{recursos/multiv/multiv.py}
+    \end{listing}
+
+    Os métodos de formatação dos \pyline{Axes} também são semelhantes às funções de formatação do \pyplot, como \pyref{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.axes.Axes.grid.html}{grid} e \pyref{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.axes.Axes.set_ylabel.html}{set\_ylabel}. Os métodos \pyref{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.axes.Axes.set_xlabel.html}{set\_xlabel} e \pyref{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.axes.Axes.set_title.html}{set\_title} também são idênticos aos do \pyplot, mas nesse gráfico tem um detalhe a mais: como o segundo eixo é um gêmeo em $x$ do primeiro eixo, o título e o rótulo do eixo $x$ não podem ser modificados pelo eixo gêmeo.
+
+    Apesar de ter gerado o eixo gêmeo, o \matplotlib está configurado para não mostrar a coluna (\textit{spine}) na parte direita do gráfico. Isso pode ser alterado mexendo diretamente com as instâncias da classe \pyref{https://matplotlib.org/3.1.0/api/spines_api.html\#matplotlib.spines.Spine}{Spine}, que pode ser acessado pelo eixo, através de um dicionário que relaciona o nome da coluna com o objeto dela. No caso, vamos acessar a coluna de nome \pyline{'right'} e mudar sua visibilidade com \pyref{https://matplotlib.org/3.1.0/gallery/ticks_and_spines/spines.html}{set\_visible}.
+
+    Para deixar os eixos mais reconhecíveis, é possível colocar legenda nos eixos, mas elas seriam redundantes aqui. Um outra opção, é o reconhecimento por cor, que pode ser feito na coluna do eixo com os métodos \pyref{https://matplotlib.org/3.1.0/api/spines_api.html?highlight=spine\#matplotlib.spines.Spine.set_color}{set\_color} e \pyref{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.patches.Patch.html\#matplotlib.patches.Patch.set_alpha}{set\_alpha}. Também foi removido a coluna esquerda do eixo gêmeo para evitar sobreposição visual das colunas.
+
+    \begin{nota}
+        As vezes, os gráficos com múltiplas curvas podem ficar sobrecarregado de informação. Quando isso acontece, o melhor é separar os dados em gráficos distintos pra manter a legibilidade. Gráficos de três eixos pdem ficar complicados com facilidade.
+    \end{nota}
+
+    \begin{figure}[H]
+        \centering
+        \input{recursos/multiv/duplo.pgf}
+
+        \caption{Exemplo de gráfico de três eixos para a corrente e a tensão em cada tempo}
+        \label{fig:multiv:duplo}
+    \end{figure}
+
+
+\subsection{Gráficos de Eixos Separados}
+
+    A opção mais genérica para mostrar os dois canais ao mesmo tempo é colocar cada um em seu próprio gŕafico com seus próprios eixos. Normalmente, isso é feito com duas imagens diferentes, mas para facilitar a comparação entre os gráficos, eles podem ser feitos em uma mesma figura. No \matplotlib, isso pode ser feito com a ideia de \textit{subplots}.
+
+    A função do \pyplot para isso é \pyref{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.pyplot.subplots.html}{subplots}, que retorna a instância da figura, um objeto \pyref{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.figure.Figure.html}{Figure}, e as instâncias dos eixos, montados em uma matriz dada pelo numero de linhas e de colunas, que no código \ref{code:multiv:paineis} é \pyline{nrows=2} e \pyline{ncols=1}. No exemplo, os eixos $x$ de cada gráfico são os mesmo, então faz sentido eles serem representados do mesmo jeito, que foi pra isso o argumento \pyline{sharex=True}.
+
+    Além disso, os eixos foram separados em superior e inferior, sendo que o título foi colocado apenas no superior e o rótulo do eixo $x$, só no inferior.
+
+    \begin{listing}[H]
+        \caption{Montagem completa do gráfico de duas varíaveis com abscissa compartilhada}
+        \label{code:multiv:paineis}
+
+        \pyinclude[firstline=71, lastline=89]{recursos/multiv/multiv.py}
+    \end{listing}
+
+    \begin{figure}[H]
+        \centering
+        \input{recursos/multiv/paineis.pgf}
+
+        \caption{Exemplo de imagem com dois gráficos}
+        \label{fig:multiv:paineis}
+    \end{figure}

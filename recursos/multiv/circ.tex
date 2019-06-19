@@ -1,0 +1,15 @@
+\begin{circuitikz}[scale=1.2]
+
+    \draw (2, 0)
+    to [short] ++(-2,0)
+    to [vsourcesin, l=$E$] ++(0,4)
+    to [short] ++(2,0)
+    to [resistor, l_=$R$] ++(0,-2)
+    to [capacitor, l_=$C$] ++(0,-2)
+    node[ground] {};
+
+    \draw [->, thick] (3,4) to node[above] {$V_1$} (2.1,4);
+
+    \draw [->, thick] (3,2) to node[above] {$V_2$} (2.1,2);
+
+\end{circuitikz}

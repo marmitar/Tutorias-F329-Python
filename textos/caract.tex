@@ -63,8 +63,8 @@ Um bom exemplo de equação característica a ser encontrada é relação do ter
         %
         \label{eq:calibracao}
         \mu_\text{calibração}(R) = \begin{cases}
-            1\% + 3 \times \text{resolução}(R),   & \text{se}~ \SI{0}{\ohm} \le R \le \SI{600}{\ohm} \\
-            0.5\% + 2 \times \text{resolução}(R), & \text{se}~ \SI{600}{\ohm} < R \le \SI{60}{\kilo\ohm} \\
+            1\% R + 3 \times \text{resolução}(R),   & \text{se}~ \SI{0}{\ohm} \le R \le \SI{600}{\ohm} \\
+            0.5\% R + 2 \times \text{resolução}(R), & \text{se}~ \SI{600}{\ohm} < R \le \SI{60}{\kilo\ohm} \\
             \text{indefinido}, & \text{caso contrário}
         \end{cases} \\%
         %
@@ -88,7 +88,7 @@ Um bom exemplo de equação característica a ser encontrada é relação do ter
 
     No código \ref{code:caract:incert} foi necessário utilizar a função \pyref{https://docs.scipy.org/doc/numpy/reference/generated/numpy.sqrt.html}{sqrt}, que é apenas a raiz quadrada: $\text{sqrt}(x) = \sqrt{x}$;. Para facilitar o código, foi utilizada também a função \pyref{https://docs.scipy.org/doc/numpy/reference/generated/numpy.vectorize.html}{vetorize} como decorador, que transforma uma função qualquer de \python em uma função vetorizada como as funções de \numpy. Isso poderia ser feito com um simples \pyline{for} também: \pyline{dRs = [dR_total(R) for R in Rs]}; mas isso retorna uma lista, que às vezes pode causar problemas com os \href{https://docs.scipy.org/doc/numpy/reference/arrays.html}{vetores} de \numpy.
 
-    O código \ref{code:caract:bandas} é similar aos outros códigos de montagem de gráfico, só que com uma nova função, \pyref{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.pyplot.fill_between.html}{fill\_between}, que desenha uma região delimitada por duas curvas \pyline{y1} e \pyline{y2}, que aqui foram $y_1 = T - \sigma_T$ e $y_2 = T + \sigma_T$, formando a faixa de incerteza. Essa região foi montada com a mesma cor da curva característica, com uma opacidade menor: \pyline{alpha=0.15}; que pode ser visto na figura \ref{fig:caract:bandas}.
+    O código \ref{code:caract:bandas} é similar aos outros códigos de montagem de gráfico, só que com uma nova função, \pyref{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.pyplot.fill_between.html}{fill\_between}, que desenha uma região delimitada por duas curvas \pyline{y1} e \pyline{y2}, que aqui foram $y_1 = T - \sigma_T$ e $y_2 = T + \sigma_T$, formando a faixa de incerteza. Essa região foi montada com a mesma cor da curva característica, com uma opacidade menor (\pyline{alpha=0.15}), o que pode ser visto na figura \ref{fig:caract:bandas}.
 
     \begin{figure}[H]
         \centering
@@ -99,5 +99,5 @@ Um bom exemplo de equação característica a ser encontrada é relação do ter
     \end{figure}
 
     \begin{nota}
-        Normalmente não é possível assumir uma incerteza determinística $\sigma_y(x, \sigma_x) = f(x)$, como foi feito com a incerteza da temperatura nessa seção. Para esse casos, é possível desconsiderar a incerteza em $x$, $\sigma_x = 0$, que serveria para mostrar a menor incerteza que a equação característica encontrada consegue alcançar. No entanto, se esse for o caso, pode ser que a banda de incerteza acabe não sendo muito útil e apenas deixe a leitura do gráfico mais complicado.
+        Normalmente não é possível assumir uma incerteza determinística $\sigma_y(x, \sigma_x) = \sigma_y(x)$, como foi feito com a incerteza da temperatura nessa seção. Para esses casos, é possível desconsiderar a incerteza em $x$, $\sigma_x = 0$, que serveria para mostrar a menor incerteza que a equação característica encontrada consegue alcançar. No entanto, se esse for o caso, pode ser que a banda de incerteza acabe não sendo muito útil e apenas deixe a leitura do gráfico mais complicada.
     \end{nota}
