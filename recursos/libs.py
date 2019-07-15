@@ -20,6 +20,7 @@ config = {
     'grid.linestyle': '--',
     'legend.facecolor': '.9',
     'legend.frameon': True,
+    'savefig.transparent': True,
     'text.color': '.0',
     'xtick.labelsize': 'small',
     'ytick.labelsize': 'small',
@@ -36,6 +37,7 @@ plt.rcParams['pgf.preamble'] = r"""
 """
 plt.rcParams['pgf.rcfonts'] = False
 
+
 def read_tsv(arq, decimal=',', **kwargs) -> pd.DataFrame:
     try:
         return pd.read_csv(arq, sep='\t', decimal=decimal, **kwargs)
@@ -43,6 +45,15 @@ def read_tsv(arq, decimal=',', **kwargs) -> pd.DataFrame:
         return pd.read_csv(arq, sep='\t', decimal=decimal, **kwargs)
 
 
-def write_table(df: pd.DataFrame, arq_nome: str, index=False, **kwargs):
-    with open(arq_nome, 'w') as arq:
-        arq.write(df.to_latex(index=index, **kwargs))
+def write_table(df: pd.DataFrame, filename: str, index=False, dots=False, **kwargs):
+    text = df.to_latex(index=index, **kwargs)
+
+    if dots:
+        ncols = len(df.columns)
+        dots = f"\\multicolumn{{{ncols}}}{{c}}{{\\dots}} \\\\\n\\bottomrule"
+
+        a, b = text.split('\\bottomrule')
+        text = a + dots + b
+
+    with open(filename, 'w') as file:
+        file.write(text)

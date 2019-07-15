@@ -1,0 +1,108 @@
+Curvas de nível servem para representar dados tridimensionais em um plano. As três variáveis para esse tipo de gráfico são $x$ e $y$ independentes e $z = f(x,y)$.
+
+Serão usados, como exemplo, dados semelhantes aos do experimento sobre potencial elétrico entre barras de cobre em uma solução condutiva. Nesse caso, as variáveis independentes são as distâncias $x$ e $y$ no plano e a variável dependente é o potencial $V$ de cada ponto.
+
+\begin{table}[H]
+    \centering
+    \input{recursos/contorno/dados}
+    \caption{Primeiros 10 pontos coletados.}
+    \label{tab:contorno:dados}
+\end{table}
+
+
+\subsection{Curvas por Malha Triangular}
+    \begin{listing}[H]
+        \caption{Desenho das curvas de nível}
+        \label{code:contorno:base}
+
+        \pyinclude[firstline=28, lastline=34]{recursos/contorno/contorno.py}
+    \end{listing}
+
+    A forma mais abrangente de se desenhar as curvas de nível é formando uma \href{https://www.wikiwand.com/pt/Malha_triangular}{malha triangular} dos pontos, onde cada ponto $(x, y)$ é tratado vétice de um triângulo e a váriavel dependente é usada para montar planos com os vértices de cada triângulo. Por mais que o processo pareça um pouco complicado, isso é feito com apenas uma função, \pyref{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.pyplot.tricontour.html}{tricontour}.
+
+    \begin{figure}[H]
+        \centering
+        \input{recursos/contorno/base.pgf}
+
+        \caption{Exemplo de curvas de nível}
+        \label{fig:contorno:base}
+    \end{figure}
+
+
+\subsection{Escala de Cores} \label{sec:contorno:cmap}
+
+    Por padrão, o \pyline{tricontour} usa uma escala de tons de cinza para representar a variável dependente, no nosso caso o potencial, sendo branco o menor valor e preto, o maior. Isso pode ser facilmente mudado com o argumento \pyline{cmap}, que pode receber um objeto \pyref{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.colors.Colormap.html}{Colormap} personalizado, mas em geral os \href{https://matplotlib.org/3.1.0/gallery/color/colormap_reference.html}{mapas de cores do \texttt{Matplotlib}} já são o bastante e só precisam ser passados os seu nomes ou nome de sua versão invertida, com \pyline{'_r'} ao final. No código \ref{code:contorno:cmap}, as cores usadas aqui são da escala \pyline{'winter'} invertida.
+
+    \begin{listing}[H]
+        \caption{Curvas de nível com escala de cores}
+        \label{code:contorno:cmap}
+
+        \pyinclude[firstline=42, lastline=45]{recursos/contorno/contorno.py}
+    \end{listing}
+
+    Agora, para que as cores façam sentido, é preciso de uma legenda para elas, que normalmente são usadas com barras de cores na lateral. A função do \pyplot para isso é a \pyref{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.pyplot.colorbar.html}{colorbar}, como no código \ref{code:contorno:cmap}.
+
+    \begin{figure}[H]
+        \centering
+        \input{recursos/contorno/cmap.pgf}
+
+        \caption{Exemplo de escala de cores}
+        \label{fig:contorno:cmap}
+    \end{figure}
+
+
+\subsection{Escolha dos Níveis}
+
+    É possível escolher quais os níveis onde serão feitas as curvas com um quarto argumento posicional. Esse argumento deve ser uma lista com as alturas ou, nesse caso, as equipotenciais que serão desenhadas. No exemplo \ref{code:contorno:niveis}, essa lista está na variável \pyline{niveis}.
+
+    \begin{listing}[H]
+        \caption{Curvas desenhadas em níveis escolhidos}
+        \label{code:contorno:niveis}
+
+        \pyinclude[firstline=53, lastline=59]{recursos/contorno/contorno.py}
+    \end{listing}
+
+    \begin{figure}[H]
+        \centering
+        \input{recursos/contorno/niveis.pgf}
+
+        \caption{Exemplo das curvas em níveis específicos}
+        \label{fig:contorno:niveis}
+    \end{figure}
+
+    \begin{nota}
+        Devido às imperfeições da técnica de triangulação, é possível que as escolha manual dos níveis pode gerar alguns problemas no desenho, em especial nas extremidades da figura. Por exemplo, com \\\pyline{niveis = [0.33, 0.66, 1.00, 1.33, 1.66]}, o código \ref{code:contorno:niveis} gera a curva de maior potencial com várias semi-retas sem sentido e a curva de menor potencial termina antes das outras.
+
+        \begin{figure}[H]
+            \centering
+            \input{recursos/contorno/problema.pgf}
+
+            \caption{Exemplo de níveis com problemas}
+            \label{fig:contorno:niveis:problema}
+        \end{figure}
+    \end{nota}
+
+
+\subsection{Formatação da Escala de Cores}
+
+    Para colocar os textos do gráfico, como títulos e rótulos, o procedimento é como nos casos anteriores, com as funções \pyline{title}, \pyline{xlabel} e \pyline{ylabel}. O único problema aqui é o com a escala de cores, que, até mesmo pelo modo como funciona, não é possível de se fazer uma função diretamente no \pyplot para descrevê-la. No entanto, as funções do \pyplot, em geral, retornam o objeto que foi criado, então a função \pyline{colorbar} retorna o objeto \pyref{https://matplotlib.org/3.1.0/api/colorbar_api.html\#matplotlib.colorbar.Colorbar}{Colorbar} que foi criado. Esse objeto tem um método próprio para mudar sua descrição, o \pyref{https://matplotlib.org/3.1.0/api/colorbar_api.html\#matplotlib.colorbar.ColorbarBase.set_label}{set\_label}, que é o que pode ser visto no código \ref{code:contorno:completo}.
+
+    \begin{listing}[H]
+        \caption{Exemplo de formatação da escala de cores e das curvas de nível}
+        \label{code:contorno:completo}
+
+        \pyinclude[firstline=70, lastline=85]{recursos/contorno/contorno.py}
+    \end{listing}
+
+    Além disso, podemos ver nas escalas de cores anteriores, como da seção \nameref{sec:contorno:cmap}, que os níveis mais extremos não aparecem muito bem. Para resolver isso, podemos extender um pouco a escala para mostrar valores além dos limites de potencial do gráfico. O argumento para isso é \pyline{extend='both'} em \pyline{tricontour}, que faz extensão em ambos os extremos. Outro argumento poderia ser \pyline{extendrect=True}, que faz a extensão ser retangular, em vez de triangular.
+
+
+\subsection{Resultado}
+
+    \begin{figure}[H]
+        \centering
+        \input{recursos/contorno/completo.pgf}
+
+        \caption{Exemplo completo de curvas de nível}
+        \label{fig:contorno:completo}
+    \end{figure}

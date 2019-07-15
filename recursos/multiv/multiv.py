@@ -8,7 +8,7 @@ write_table(pd.DataFrame({
     '$V_1$': dados['V1'].apply(lambda x: f'{x:.1f} \si{{\\volt}}'),
     '$V_2$': dados['V2'].apply(lambda x: f'{x:.1f} \si{{\\volt}}'),
     'Corrente': dados['I'].apply(lambda x: f'{x:.0f} \si{{\mA}}')
-}).head(6), 'dados.tex', column_format='cccc', escape=False)
+}).head(6), 'dados.tex', dots=True, column_format='cccc', escape=False)
 
 # -- importa os dados antes -- #
 
