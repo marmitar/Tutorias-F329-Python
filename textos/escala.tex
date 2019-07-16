@@ -73,14 +73,14 @@ Dentre as técnicas mais comuns, muitas envolvem a aplicação de logaritmos par
             &= \ln(A) + B ~ T^{-1}
     \end{align*}
 
+    Que pode ser usada em um gráfico \texttt{semi-log} de $R \times T^{-1}$, feito similar à seção \nameref{sec:escala:loglog}, que pode ser visto no código \ref{code:escala:semilog} com a figura \ref{fig:escala:semilog:resultado} como resultado. Uma das diferenças específicas da equação (\ref{eq:termistor}) é a transformação do eixo $x$ da temperatura para $T^{-1}$.
+
     \begin{listing}[H]
         \caption{Contrução de um gráfico \texttt{semi-log} com barras de incerteza}
         \label{code:escala:semilog}
 
         \pyinclude[firstline=9, lastline=30]{recursos/escala/termi.py}
     \end{listing}
-
-    Que pode ser usada em um gráfico \texttt{semi-log} de $R \times T^{-1}$, feito similar a seção \nameref{sec:escala:loglog}, que pode ser visto no código \ref{code:escala:semilog} com a figura \ref{fig:escala:semilog:resultado} como resultado. Uma das diferenças específicas da equação (\ref{eq:termistor}) é a transformação do eixo $x$ da temperatura para $T^{-1}$.
 
     \begin{figure}[H]
         \centering

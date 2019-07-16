@@ -18,7 +18,7 @@ Serão usados, como exemplo, dados semelhantes aos do experimento sobre potencia
         \pyinclude[firstline=28, lastline=34]{recursos/contorno/contorno.py}
     \end{listing}
 
-    A forma mais abrangente de se desenhar as curvas de nível é formando uma \href{https://www.wikiwand.com/pt/Malha_triangular}{malha triangular} dos pontos, onde cada ponto $(x, y)$ é tratado vétice de um triângulo e a váriavel dependente é usada para montar planos com os vértices de cada triângulo. Por mais que o processo pareça um pouco complicado, isso é feito com apenas uma função, \pyref{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.pyplot.tricontour.html}{tricontour}.
+    A forma mais abrangente de se desenhar as curvas de nível é formando uma \href{https://www.wikiwand.com/pt/Malha_triangular}{malha triangular} dos pontos, onde cada ponto $(x, y)$ é tratado como um vétice de um triângulo e a váriavel dependente é usada para montar planos com os vértices de cada triângulo. Por mais que o processo pareça um pouco complicado, isso é feito com apenas uma função, \pyref{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.pyplot.tricontour.html}{tricontour}.
 
     \begin{figure}[H]
         \centering
@@ -31,7 +31,7 @@ Serão usados, como exemplo, dados semelhantes aos do experimento sobre potencia
 
 \subsection{Escala de Cores} \label{sec:contorno:cmap}
 
-    Por padrão, o \pyline{tricontour} usa uma escala de tons de cinza para representar a variável dependente, no nosso caso o potencial, sendo branco o menor valor e preto, o maior. Isso pode ser facilmente mudado com o argumento \pyline{cmap}, que pode receber um objeto \pyref{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.colors.Colormap.html}{Colormap} personalizado, mas em geral os \href{https://matplotlib.org/3.1.0/gallery/color/colormap_reference.html}{mapas de cores do \texttt{Matplotlib}} já são o bastante e só precisam ser passados os seu nomes ou nome de sua versão invertida, com \pyline{'_r'} ao final. No código \ref{code:contorno:cmap}, as cores usadas aqui são da escala \pyline{'winter'} invertida.
+    Por padrão, o \pyline{tricontour} usa uma escala de tons de cinza para representar a variável dependente, no nosso caso o potencial, sendo branco o menor valor e preto, o maior. Isso pode ser facilmente mudado com o argumento \pyline{cmap}, que pode receber um objeto \pyref{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.colors.Colormap.html}{Colormap} personalizado, mas em geral os \href{https://matplotlib.org/3.1.0/gallery/color/colormap_reference.html}{mapas de cores do \texttt{Matplotlib}} já são o bastante e só precisam ser passados pelos seu nomes ou nome de sua versão invertida, com \pyline{'_r'} ao final. Isso pode ser visto no código \ref{code:contorno:cmap} com as cores usadas aqui, que são da escala \pyline{'winter'} invertida.
 
     \begin{listing}[H]
         \caption{Curvas de nível com escala de cores}

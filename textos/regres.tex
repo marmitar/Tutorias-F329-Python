@@ -7,7 +7,7 @@ Pelo alinhamento dos pontos da seção \nameref{sec:reta} e pela equação teór
 
     A primeira coisa é pegar os dados e mostrar cada ponto coletado, como na seção \nameref{sec:reta}. Só que como vamos precisar dos dados depois, o melhor é separar as colunas dos dados em suas próprias variáveis para facilitar a análise dos dados depois, apesar disso não ser necessário.
 
-    Para este gráfico, como teremos dois tipos de figuras, os dados realmente coletados e a reta resultante da regressão, então vamos precisar de colocar a legenda. É possível já colocar o texto da legenda na construção do gráfico com o argumento \pyline{label}. Isso pode ser visto no código \ref{code:regres:dados}, mas lá também tem um argumento extra, \pyline{zorder}, que controla a ordem dos desenhos e que foi usado aqui para colocar os pontos acima da reta que será feita depois.
+    Para este gráfico, como teremos dois tipos de figuras, os dados realmente coletados e a reta resultante da regressão, vamos precisar colocar a legenda. É possível já colocar o texto da legenda na construção do gráfico com o argumento \pyline{label}. Isso pode ser visto no código \ref{code:regres:dados}, mas lá também tem um argumento extra, \pyline{zorder}, que controla a ordem dos desenhos e que foi usado aqui para colocar os pontos acima da reta que será feita depois.
 
     \begin{listing}[H]
         \caption{Separando e desenhando os dados pontuais}
@@ -42,7 +42,7 @@ Pelo alinhamento dos pontos da seção \nameref{sec:reta} e pela equação teór
 
 \subsection{Desenho da Regressão}
 
-    Para desenhar a reta da regressão é com a função \pyref{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.pyplot.plot.html}{plot}, mas antes precisamos montar o rótulo que irá na legenda do gráfico. No código \ref{code:regres:plot} tem dois exemplos para o rótulo, um apenas textual e outro com os coeficientes da regressão.
+    Desenhar a reta da regressão é com a função \pyref{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.pyplot.plot.html}{plot}, mas antes precisamos montar o rótulo que irá na legenda do gráfico. No código \ref{code:regres:plot} têm dois exemplos para o rótulo, um apenas textual e outro com os coeficientes da regressão.
 
     \begin{listing}[H]
         \caption{Desenho da reta encontrada}
