@@ -1,4 +1,4 @@
-image: b733ade6f72a # $CI_REGISTRY/f329-tutoriais/docker:latest
+image: $CI_REGISTRY/f329-tutoriais/docker:latest
 
 stages:
   - images
