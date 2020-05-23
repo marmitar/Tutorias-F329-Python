@@ -1,6 +1,7 @@
 image: aergus/latex
 
 stages:
+  - images
   - build
 
 variables:
@@ -15,11 +16,22 @@ before_script:
     python3-matplotlib python3-pygments
   - ln -s $(which python3) $(dirname $(which python3))/python
 
-make pdf:
+create images:
+  stage: images
+  script:
+    - sh recursos/runpy.sh
+  artifacts:
+    name: images
+    paths:
+      - recursos/*/*.pgf
+
+
+build document:
   stage: build
   script:
     - latexmk -pdf main.tex -shell-escape
     - mv main.pdf python.pdf
   artifacts:
+    name: document
     paths:
       - python.pdf
