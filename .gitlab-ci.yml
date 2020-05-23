@@ -1,4 +1,4 @@
-image: $CI_REGISTRY/f329-tutoriais/docker:latest
+image: b733ade6f72a # $CI_REGISTRY/f329-tutoriais/docker:latest
 
 stages:
   - images
@@ -6,16 +6,6 @@ stages:
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
-
-
-create images:
-  stage: images
-  script:
-    - sh recursos/runpy.sh
-  artifacts:
-    name: images
-    paths:
-      - recursos/*/*.pgf
 
 
 build document:
@@ -27,3 +17,83 @@ build document:
     name: document
     paths:
       - python.pdf
+
+
+.run_file:
+  stage: images
+  script:
+    - cd recursos/$PYFOLDER
+    - python3 $PYFILE.py
+
+.create_image:
+  extends: .run_file
+  artifacts:
+    name: images
+    paths:
+      - recursos/$PYFOLDER/*.pgf
+
+.samename_img:
+  extends: .create_image
+  variables:
+    PYFILE: $PYFOLDER
+
+
+basico read:
+  extends: .run_file
+  variables:
+    PYFOLDER: basico
+    PYFILE: read
+
+caract caract:
+  extends: .samename_img
+  variables:
+    PYFOLDER: caract
+
+caract incert:
+  extends: .create_image
+  variables:
+    PYFOLDER: caract
+    PYFILE: incert
+
+caract regres:
+  extends: .create_image
+  variables:
+    PYFOLDER: caract
+    PYFILE: regres
+
+contorno:
+  extends: .samename_img
+  variables:
+    PYFOLDER: contorno
+
+escala termi:
+  extends: .create_image
+  variables:
+    PYFOLDER: escala
+    PYFILE: termi
+
+escala wheat:
+  extends: .create_image
+  variables:
+    PYFOLDER: escala
+    PYFILE: wheat
+
+incert:
+  extends: .samename_img
+  variables:
+    PYFOLDER: incert
+
+multiv:
+  extends: .samename_img
+  variables:
+    PYFOLDER: multiv
+
+regres:
+  extends: .samename_img
+  variables:
+    PYFOLDER: regres
+
+reta:
+  extends: .samename_img
+  variables:
+    PYFOLDER: reta
