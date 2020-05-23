@@ -1,21 +1,19 @@
 image: aergus/latex
 
 stages:
-  - prepare
   - build
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
 
 
-prepare:
-  stage: prepare
-  script:
-    - export DEBIAN_FRONTEND=noninteractive
-    - apt-get install -y latexmk python3
-      python3-numpy python3-scipy python3-pandas
-      python3-matplotlib python3-pygments
-    - ln -s $(which python3) $(dirname $(which python3))/python
+before_script:
+  - export DEBIAN_FRONTEND=noninteractive
+  - apt-get update -y
+  - apt-get install -y latexmk python3
+    python3-numpy python3-scipy python3-pandas
+    python3-matplotlib python3-pygments
+  - ln -s $(which python3) $(dirname $(which python3))/python
 
 make pdf:
   stage: build
