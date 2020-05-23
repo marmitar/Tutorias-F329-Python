@@ -18,6 +18,7 @@ main.pdf
 *.run*
 *.toc*
 *.sciprj*
+recursos/*/*.pgf
 
 *.gz
 *.zip
