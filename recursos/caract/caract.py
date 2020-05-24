@@ -30,7 +30,7 @@ ans = odreg.run()
 
 # coeficientes: lnR = a T^-1 + b
 a, b = ans.beta
-da, db = ans.sd_beta
+da, db = np.sqrt(np.diag(ans.cov_beta))
 
 # transforma para R = A e^(B/T)
 A = np.exp(b)

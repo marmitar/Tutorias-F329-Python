@@ -24,7 +24,7 @@ odreg = odr.ODR(data, odr.models.unilinear)
 ans = odreg.run()
 
 a, b = ans.beta
-da, db = ans.sd_beta
+da, db = np.sqrt(np.diag(ans.cov_beta))
 
 rotulo = f'''Regressão Linearizada:
 $\ln y = ({a:.0f} \pm {da:.0f}) \\times x^{{-1}} + ({b:.1f} \pm {db:.1f})$'''

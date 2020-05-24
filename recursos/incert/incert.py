@@ -30,8 +30,8 @@ odreg = odr.ODR(data, odr.models.unilinear)
 #odreg.set_job(fit_type=2)  # mínimos quadrados não suporta incertezas em x
 ans = odreg.run()
 
-a, b = ans.beta      # y = ax + b
-da, db = ans.sd_beta # incertezas de a e b
+a, b = ans.beta                         # y = ax + b
+da, db = np.sqrt(np.diag(ans.cov_beta)) # incertezas de a e b
 
 # mostrando os coeficientes e suas incertezas
 print(f'coef. angular = ({a}+-{da}) [mA/V -> kOhm^-1 -> kS]')
