@@ -49,12 +49,12 @@ eixo_dir.plot(t, I, color='blue', alpha=0.6, label='Corrente')
 eixo_dir.set_ylabel('Corrente [$mA$]')
 eixo_dir.grid(False)
 
-# título r rótulo do eixo compartilhado
+# título e rótulo do eixo compartilhado
 eixo_esq.set_title('Relação de Corrente e Tensão em um Capacitor')
 eixo_esq.set_xlabel('Tempo [$ms$]')
 # coluna do eixo da direita
 eixo_dir.spines['right'].set_visible(True)
-# e tira a coluna sobreposta
+# remove a coluna sobreposta
 eixo_dir.spines['left'].set_visible(False)
 
 # cores das colunas dos eixos

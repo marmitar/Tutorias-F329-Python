@@ -3,7 +3,7 @@ Um bom exemplo de equação característica a ser encontrada é relação do ter
 
 \subsection{Encontrando os Coeficientes}
 
-    Para encontrar os coeficientes da equação característica, o primeiro passo normalmente é conseguir uma relação de linearização para poder aplicar alguma técnica de regressão linear e coeficientes dessa relação. Isso pode ser feito como na seção \nameref{sec:escala:regres}.
+    Para encontrar os coeficientes da equação característica, o primeiro passo normalmente é conseguir uma relação de linearização para poder aplicar alguma técnica de regressão linear e encontrar os coeficientes dessa relação. Isso pode ser feito como na seção \nameref{sec:escala:regres}.
 
     \begin{figure}[H]
         \centering
@@ -44,7 +44,7 @@ Um bom exemplo de equação característica a ser encontrada é relação do ter
 
 \subsection{Banda de Incerteza}
 
-    Para a equação \ref{eq:caract:termistor}, como $A$ e $B$ são constantes, bem como suas incertezas, $\sigma_A$ e $\sigma_B$, a equação da incerteza $\sigma_T$ de $T$ fica como:
+    Para a equação \ref{eq:caract:termistor}, como $A$ e $B$ são constantes, bem como suas incertezas, $\sigma_A$ e $\sigma_B$, a equação da incerteza $\sigma_T$ de $T$ fica como função apenas de $R$ e $\sigma_R$:
 
     \begin{equacao}
         \sigma_T ~ = ~ \sigma_T(R, \sigma_R) ~ = ~ \frac{\sqrt{\left(\ln(R) - \ln(A)\right)^2 \sigma_B^2 + \left(\frac{\sigma_A}{A}\right)^2 + \left(\frac{\sigma_R}{R}\right)^2}}{\left(\ln(R) - \ln(A)\right)^2}
@@ -52,7 +52,7 @@ Um bom exemplo de equação característica a ser encontrada é relação do ter
 
     Se a equação característica for usada com um equipamento já pré-estabelecido, é possível assumir que a incerteza da medida, no caso a resistência, vai seguir uma função $\sigma_R = \sigma_R(R)$ conhecida para cada $R$. Dependendo da situação, é possível assumir que $\sigma_R$ é constante ou que a incerteza relativa $\frac{\sigma_R}{R}$ é constante. Para este exemplo, vamos assumir as equações (\ref{eq:resolucao}), (\ref{eq:calibracao}) e (\ref{eq:incerteza}).
 
-    \begin{eqnarray}
+    \begin{gather}
         \label{eq:resolucao}
         \text{resolução}(R) = \begin{cases}
             \SI{0.1}{\ohm}, & \text{se}~ \SI{0}{\ohm} \le R \le \SI{600}{\ohm} \\
@@ -70,7 +70,7 @@ Um bom exemplo de equação característica a ser encontrada é relação do ter
         %
         \label{eq:incerteza}
         \sigma_R(R) = \sqrt{\left(\frac{\text{resolução}(R)}{2 \sqrt{3}} \right)^2 + \left(\frac{\mu_\text{calibração}(R)}{\sqrt{3}} \right)^2}
-    \end{eqnarray}
+    \end{gather}
 
     \begin{listing}[H]
         \caption{Implementação das funções para o cálculo da incerteza}
@@ -88,7 +88,7 @@ Um bom exemplo de equação característica a ser encontrada é relação do ter
 
     No código \ref{code:caract:incert} foi necessário utilizar a função \pyref{https://docs.scipy.org/doc/numpy/reference/generated/numpy.sqrt.html}{sqrt}, que é apenas a raiz quadrada: $\text{sqrt}(x) \coloneqq \sqrt{x}$;. Para facilitar o código, foi utilizada também a função \pyref{https://docs.scipy.org/doc/numpy/reference/generated/numpy.vectorize.html}{vectorize} como decorador, que transforma uma função qualquer de \python em uma função vetorizada como as funções de \numpy. Isso poderia ser feito com um simples \pyline{for} também: \pyline{dRs = [dR_total(R) for R in Rs]}; mas isso retorna uma lista, que às vezes pode causar problemas com os \href{https://docs.scipy.org/doc/numpy/reference/arrays.html}{vetores} de \numpy.
 
-    O código \ref{code:caract:bandas} é similar aos outros códigos de montagem de gráfico, só que com uma nova função, \pyref{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.pyplot.fill_between.html}{fill\_between}, que desenha uma região delimitada por duas curvas \pyline{y1} e \pyline{y2}, que aqui foram $y_1 = T - \sigma_T$ e $y_2 = T + \sigma_T$, formando a faixa de incerteza. Essa região foi montada com a mesma cor da curva característica, com uma opacidade menor (\pyline{alpha=0.15}), o que pode ser visto na figura \ref{fig:caract:bandas}.
+    O código \ref{code:caract:bandas} é similar aos outros códigos de montagem de gráfico, só que com uma nova função, \pyref{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.pyplot.fill_between.html}{fill\_between}, que desenha uma região delimitada por duas curvas \pyline{y1} e \pyline{y2}, sendo $y_1 = T - \sigma_T$ e $y_2 = T + \sigma_T$, formando a faixa de incerteza. Essa região foi montada com a mesma cor da curva característica, com uma opacidade menor (\pyline{alpha=0.15}), o que pode ser visto na figura \ref{fig:caract:bandas}.
 
     \begin{figure}[H]
         \centering

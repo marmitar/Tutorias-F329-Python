@@ -31,7 +31,7 @@ Serão usados, como exemplo, dados semelhantes aos do experimento sobre potencia
 
 \subsection{Escala de Cores} \label{sec:contorno:cmap}
 
-    Por padrão, o \pyline{tricontour} usa uma escala de tons de cinza para representar a variável dependente, no nosso caso o potencial, sendo branco o menor valor e preto, o maior. Isso pode ser facilmente mudado com o argumento \pyline{cmap}, que pode receber um objeto \pyref{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.colors.Colormap.html}{Colormap} personalizado, mas em geral os \href{https://matplotlib.org/3.1.0/gallery/color/colormap_reference.html}{mapas de cores do \texttt{Matplotlib}} já são o bastante e só precisam ser passados pelos seu nomes ou nome de sua versão invertida, com \pyline{'_r'} ao final. Isso pode ser visto no código \ref{code:contorno:cmap} com as cores usadas aqui, que são da escala \pyline{'winter'} invertida.
+    Por padrão, o \pyline{tricontour} usa uma escala de tons de cinza para representar a variável dependente, no nosso caso o potencial, sendo branco o menor valor e preto, o maior. Isso pode ser facilmente alterado com o argumento \pyline{cmap}, que pode receber um objeto \pyref{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.colors.Colormap.html}{Colormap} personalizado, mas em geral os \href{https://matplotlib.org/3.1.0/gallery/color/colormap_reference.html}{mapas de cores do \texttt{Matplotlib}} já são o bastante e só precisam ser passados pelos seu nomes ou nome de sua versão invertida, com \pyline{'_r'} ao final. Isso pode ser visto no código \ref{code:contorno:cmap} com as cores usadas aqui, que são da escala \pyline{'winter'} invertida.
 
     \begin{listing}[H]
         \caption{Curvas de nível com escala de cores}
@@ -71,7 +71,7 @@ Serão usados, como exemplo, dados semelhantes aos do experimento sobre potencia
     \end{figure}
 
     \begin{nota}
-        Devido às imperfeições da técnica de triangulação, é possível que as escolha manual dos níveis pode gerar alguns problemas no desenho, em especial nas extremidades da figura. Por exemplo, com \\\pyline{niveis = [0.33, 0.66, 1.00, 1.33, 1.66]}, o código \ref{code:contorno:niveis} gera a curva de maior potencial com várias semi-retas sem sentido e a curva de menor potencial termina antes das outras.
+        Devido às imperfeições da técnica de triangulação, é possível que a escolha manual dos níveis gere alguns problemas no desenho, em especial nas extremidades da figura. Por exemplo, com \pyline{niveis = [0.33, 0.66, 1.00, 1.33, 1.66]}, o código \ref{code:contorno:niveis} gera a curva de maior potencial com várias semi-retas sem sentido e a curva de menor potencial termina antes das outras.
 
         \begin{figure}[H]
             \centering

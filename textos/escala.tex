@@ -1,4 +1,4 @@
-Várias vezes, no entanto, os dados não apresentam relação linear. Nesses casos, é importante encontrar alguma técnica de linearização que transforma os dados para novos valores dependentes, mas que se relacionam de maneira linear. Algo como a relação \ref{eq:linearizacao}.
+Em várias outras vezes, no entanto, os dados não apresentam relação linear. Em alguns desses caso é possível encontrar alguma técnica de linearização que transforma os dados para novos valores dependentes, mas que se relacionam de maneira linear. Algo como a relação \ref{eq:linearizacao}.
 
 \begin{equacao} \label{eq:linearizacao}
     f(x, y) = a + b ~ g(x, y)
@@ -37,7 +37,7 @@ Dentre as técnicas mais comuns, muitas envolvem a aplicação de logaritmos par
         \pyinclude[firstline=9, lastline=27]{recursos/escala/wheat.py}
     \end{listing}
 
-    Portanto, podemos montar um gráfico \texttt{log-log} de $R_d$ por $R_x$, que pode ser feito como em \ref{code:escala:loglog}. O \pyplot tem as funções \pyref{https://matplotlib.org/api/_as_gen/matplotlib.pyplot.xscale.html}{xscale} e \pyref{https://matplotlib.org/api/_as_gen/matplotlib.pyplot.yscale.html}{yscale} para mudar as escalas dos eixos, que podem receber como argumento \pyline{'linear'} e \pyline{'log'} por padrão, além de algumas outras opções, mas é possível adicionar \href{https://matplotlib.org/gallery/scales/custom_scale.html}{escalas} \href{https://matplotlib.org/gallery/scales/scales.html}{customizadas} no \matplotlib.
+    Portanto, podemos montar um gráfico \texttt{log-log} de $R_d$ por $R_x$, que pode ser feito como em \ref{code:escala:loglog}. O \pyplot tem as funções \pyref{https://matplotlib.org/api/_as_gen/matplotlib.pyplot.xscale.html}{xscale} e \pyref{https://matplotlib.org/api/_as_gen/matplotlib.pyplot.yscale.html}{yscale} para mudar as escalas dos eixos, que podem receber como argumento \pyline{'linear'} e \pyline{'log'} por padrão, além de algumas outras opções, mas é possível adicionar \href{https://matplotlib.org/gallery/scales/scales.html}{escalas} \href{https://matplotlib.org/gallery/scales/custom_scale.html}{customizadas} no \matplotlib.
 
     \begin{figure}[H]
         \centering
@@ -73,7 +73,7 @@ Dentre as técnicas mais comuns, muitas envolvem a aplicação de logaritmos par
             &= \ln(A) + B ~ T^{-1}
     \end{align*}
 
-    Que pode ser usada em um gráfico \texttt{semi-log} de $R \times T^{-1}$, feito similar à seção \nameref{sec:escala:loglog}, que pode ser visto no código \ref{code:escala:semilog} com a figura \ref{fig:escala:semilog:resultado} como resultado. Uma das diferenças específicas da equação (\ref{eq:termistor}) é a transformação do eixo $x$ da temperatura para $T^{-1}$.
+    Que pode ser usada em um gráfico \texttt{semi-log} de $R \times T^{-1}$, feito similar à seção \nameref{sec:escala:loglog}, que pode ser visto no código \ref{code:escala:semilog} com a figura \ref{fig:escala:semilog:resultado} como resultado. Uma das diferenças específicas da equação (\ref{eq:termistor}) é a transformação do eixo $x$ de temperatura para $T^{-1}$.
 
     \begin{listing}[H]
         \caption{Contrução de um gráfico \texttt{semi-log} com barras de incerteza}
@@ -108,7 +108,7 @@ Dentre as técnicas mais comuns, muitas envolvem a aplicação de logaritmos par
 
     O único detalhe é que é preciso encontrar os valores de $f(x, y)$ e $g(x, y)$ e suas incertezas para cada par $(x, y)$ dos dados e só com esses valores pode-se encontrar os coeficientes $a$ e $b$, como foi feito no código \ref{code:escala:regres}. No caso, como a transformação é $f(x, y) = \log_{10}(x)$, a incerteza fica $\sigma_{\log x} = \frac{1}{\ln(10)} \frac{\sigma_x}{x}$, sendo que para o eixo $y$ a transformação é igual.
 
-    As funções matemáticas foram utilizadas pelo \numpy, pelas técnicas de vetorização oferecidas, sendo elas \pyref{https://docs.scipy.org/doc/numpy/reference/generated/numpy.log.html}{log} e \pyref{https://docs.scipy.org/doc/numpy/reference/generated/numpy.log10.html}{log10}, que equivalem a $\ln(x)$ e $\log_{10}(x)$.
+    Foram utilizadas as funções matemáticas do \numpy, pelas técnicas de vetorização oferecidas, sendo elas \pyref{https://docs.scipy.org/doc/numpy/reference/generated/numpy.log.html}{log} e \pyref{https://docs.scipy.org/doc/numpy/reference/generated/numpy.log10.html}{log10}, que equivalem a $\ln(x)$ e $\log_{10}(x)$.
 
     \begin{figure}[H]
         \centering
@@ -118,4 +118,4 @@ Dentre as técnicas mais comuns, muitas envolvem a aplicação de logaritmos par
         \label{fig:escala:regres}
     \end{figure}
 
-    Perceba que a regressão obteve coeficiente angular próximo de $-1$, como era o esperado pela equação inicial (\ref{eq:wheatstone}).
+    Perceba que a regressão obteve um coeficiente angular próximo de $-1$, como era o esperado pela equação inicial (\ref{eq:wheatstone}).

@@ -17,7 +17,7 @@ Como exemplo para a aplicação de barras de incerteza, continuaremos com os mes
         \pyinclude[firstline=12, lastline=25]{recursos/incert/incert.py}
     \end{listing}
 
-    Para facilitar, as colunas foram separadas em \pyline{x} e \pyline{y}, com suas incertezas \pyline{dx} e \pyline{dy} em cada ponto. Agora, para desenhar as barras de incerteza, basta utilizar a função \pyref{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.pyplot.errorbar.html}{errorbar} com os argumentos \pyline{xerr=dx} e \pyline{yerr=dy}. O argumento \pyline{fmt} foi usado para fazer com que os dados fossem desenhados como pontos, que é o formato \pyline{'o'}.
+    Para facilitar, as colunas foram separadas em \pyline{x} e \pyline{y}, com suas incertezas \pyline{dx} e \pyline{dy} em cada ponto. Agora, para desenhar as barras de incerteza, basta utilizar a função \pyref{https://matplotlib.org/3.1.0/api/_as_gen/matplotlib.pyplot.errorbar.html}{errorbar} com os argumentos \pyline{xerr=dx} e \pyline{yerr=dy}. O argumento \pyline{fmt} foi usado para fazer com que os dados fossem desenhados como pontos, que é o formato \pyline{'o'}. O formato \pyline{'.'} pode ser usado se preferir pontos menores ou quando a incerteza é muito pequena.
 
     Além disso, os argumentos \pyline{elinewidth}, \pyline{capsize} e \pyline{capthick} controlam a grossura da barra de incerteza, o comprimento do topo da barra e a grossura desse topo, respectivamente. A cor dos pontos e das barras foi alterado para preto com \pyline{color='black'}. Novamente, esses desenhos foram colocados com ordem alta de desenho e com um rótulo para a legenda.
 

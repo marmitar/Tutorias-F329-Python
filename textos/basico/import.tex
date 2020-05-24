@@ -1,4 +1,4 @@
-Em \python, a melhor forma de ser representar os dados para análise gráfica costuma ser com as ferramentas do \pandas. Nessa biblioteca os dados são tratados na forma de um \dataframe, um tipo de representação em tabelas com as abstrações tradicionais de linhas e colunas. Essa tabela pode ser construída manualmente ou gerada de um arquivo de texto ou binário seguindo algumas especificações. As colunas do \dataframe são acessadas por nome, similar ao acesso por chave em um dicionáro.
+Em \python, a melhor forma de se representar os dados para análise gráfica costuma ser com as ferramentas do \pandas. Nessa biblioteca os dados são tratados na forma de um \dataframe, um tipo de representação em tabelas com as abstrações tradicionais de linhas e colunas. Essa tabela pode ser construída manualmente ou gerada de um arquivo de texto ou binário seguindo algumas especificações. As colunas do \dataframe são acessadas por nome, similar ao acesso por chave em um dicionáro.
 
 No caso dos dados de um gerenciador de tabelas, como o \texttt{Excel}, o \texttt{Google Planilhas} ou o \texttt{LibreOffice Calc}, é preciso organizar os valores em colunas, como na figura \ref{fig:basico:dados}, em uma folha de planilha própria com apenas estes dados. É recomendável, também, colocar estes dados no começo da folha, começando na primeira linha e na primeira coluna, e deixar a primeira linha dos dados com o nome da coluna que será usado para acesso no \dataframe.
 
@@ -23,9 +23,9 @@ No caso dos dados de um gerenciador de tabelas, como o \texttt{Excel}, o \texttt
         \label{fig:basico:download}
     \end{figure}
 
-    Apesar de o exemplo da figura \ref{fig:basico:download} ser apenas no \texttt{Google Planilhas}, qualquer outro gerenciador de tabelas atual terá uma opção similar como parte do programa também. Uma vez que o \texttt{CSV} esteja pronto, ele pode ser transformado em um \dataframe com a função \pyref{http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html}{read\_csv} do \pandas.
+    Apesar de o exemplo da figura \ref{fig:basico:download} ser apenas no \texttt{Google Planilhas}, qualquer outro gerenciador de tabelas atual terá uma opção similar como parte do programa também.
 
-    O argumento \pyline{decimal} da função representa qual o carácter a ser entendido como separador decimal. No exemplo do código \ref{code:basico:csv}, é usado a vírgula como separador, mas se por acaso estiver usando o ponto final para isso, lembre-se de mudar para \pyline{'.'}. Se o separador estiver diferente, o \pandas vai entender o valor como texto, o que não servirá para a montagem do gráfico depois.
+    Uma vez que o \texttt{CSV} esteja pronto, ele pode ser transformado em um \dataframe com a função \pyref{http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html}{read\_csv} do \pandas. O argumento \pyline{decimal} da função representa qual o carácter a ser entendido como separador decimal. No exemplo do código \ref{code:basico:csv}, é usado a vírgula como separador, mas se por acaso estiver usando o ponto final para isso, lembre-se de mudar para \pyline{'.'}. Se o separador estiver diferente, o \pandas vai entender o valor como texto, o que não servirá para a montagem do gráfico depois.
 
     \begin{listing}[H]
         \caption{Leitura de um \dataframe a partir de um \texttt{CSV}}
