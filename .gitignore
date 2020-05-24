@@ -18,7 +18,9 @@ main.pdf
 *.run*
 *.toc*
 *.sciprj*
+
 recursos/*/*.pgf
+recursos/*/dados.tex
 
 *.gz
 *.zip

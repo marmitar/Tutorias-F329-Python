@@ -31,6 +31,7 @@ build document:
     name: images
     paths:
       - recursos/$PYFOLDER/*.pgf
+      - recursos/$PYFOLDER/dados.tex
 
 .samename_img:
   extends: .create_image
