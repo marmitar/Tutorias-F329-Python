@@ -28,7 +28,7 @@ Pelo alinhamento dos pontos da seção \nameref{sec:reta} e pela equação teór
         \pyinclude[firstline=2, lastline=5]{recursos/regres/regres.py}
     \end{listing}
 
-    Para tanto, é preciso organizar os dados em uma instância de \pyref{https://docs.scipy.org/doc/scipy/reference/generated/scipy.odr.RealData.html}{RealData} e usar isso para criar uma instância da \pyref{https://docs.scipy.org/doc/scipy/reference/generated/scipy.odr.ODR.html}{ODR} com o modelo da regressão, que em todos os exemplos desse material será o \pyref{https://docs.scipy.org/doc/scipy/reference/odr.html\#scipy.odr.unilinear}{odr.models.unilinear}. Se preferir usar o método dos mínimos quadrados é só chamar o método \pyref{https://docs.scipy.org/doc/scipy/reference/generated/scipy.odr.ODR.set_job.html}{set\_job} com argumento \pyline{fit_type=2}. Depois é só rodar a regressão com o \pyref{https://docs.scipy.org/doc/scipy/reference/generated/scipy.odr.ODR.run.html}{run}, que retorna um objeto \pyref{https://docs.scipy.org/doc/scipy/reference/generated/scipy.odr.Output.html}{Output} com várias informações, entre elas os coeficientes e a matriz de covariância deles, nos atributos \pyline{beta} e \pyline{cov_beta}, respectivamente. Como a diagonal dessa matriz é composta da variância de cada coeficiente, o desvio padrão é a raiz da diagonal dela, que pode ser usado como incerteza dos resultados.
+    Para tanto, é preciso organizar os dados em uma instância de \pyref{https://docs.scipy.org/doc/scipy/reference/generated/scipy.odr.RealData.html}{RealData} e usar isso para criar uma instância da \pyref{https://docs.scipy.org/doc/scipy/reference/generated/scipy.odr.ODR.html}{ODR} com o modelo da regressão, que em todos os exemplos desse material será o \pyref{https://docs.scipy.org/doc/scipy/reference/odr.html\#scipy.odr.unilinear}{odr.models.unilinear}. Se preferir usar o método dos mínimos quadrados é só chamar o método \pyref{https://docs.scipy.org/doc/scipy/reference/generated/scipy.odr.ODR.set_job.html}{set\_job} com argumento \pyline{fit_type=2}. Depois é só rodar a regressão com o \pyref{https://docs.scipy.org/doc/scipy/reference/generated/scipy.odr.ODR.run.html}{run}, que retorna um objeto \pyref{https://docs.scipy.org/doc/scipy/reference/generated/scipy.odr.Output.html}{Output} com várias informações, entre elas os coeficientes e a matriz de covariância deles, nos atributos \pyline{beta} e \pyline{cov_beta}, respectivamente.
 
     \begin{listing}[H]
         \caption{Regressão Linear com Mínimos Quadrados}
@@ -37,7 +37,7 @@ Pelo alinhamento dos pontos da seção \nameref{sec:reta} e pela equação teór
         \pyinclude[firstline=20, lastline=33]{recursos/regres/regres.py}
     \end{listing}
 
-    As últimas linhas do código \ref{code:regres:regres} servem para que os valores dos coeficientes sejam mostrados no terminal ou no \textit{notebook} do \texttt{Jupyter}, quando executado.
+    A incerteza foi adotada como o desvio padrão de cada coeficiente, que é calculado pela raiz quadrada da diagonal da matriz de covariância. Usando o \numpy, isso é feito com \pyref{https://docs.scipy.org/doc/numpy/reference/generated/numpy.sqrt.html}{sqrt} e \pyref{https://docs.scipy.org/doc/numpy/reference/generated/numpy.diag.html}{diag}. Já as últimas linhas do código \ref{code:regres:regres} servem apenas para mostrar os valores dos coeficientes no terminal ou no \textit{notebook} do \texttt{Jupyter}, quando executado.
 
 
 \subsection{Desenho da Regressão}
