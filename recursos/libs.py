@@ -25,7 +25,7 @@ config = {
     'xtick.labelsize': 'small',
     'ytick.labelsize': 'small',
 }
-plt.style.use(['seaborn-whitegrid', 'seaborn-paper', 'seaborn-muted', config])
+plt.style.use(['seaborn-v0_8-whitegrid', 'seaborn-v0_8-paper', 'seaborn-v0_8-muted', config])
 
 # -- resto do código -- #
 

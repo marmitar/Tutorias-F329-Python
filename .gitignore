@@ -1,5 +1,5 @@
 .vscode/
-_minted-*
+_minted*
 __pycache__
 
 main.pdf
